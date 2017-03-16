@@ -1,0 +1,46 @@
+# vim: set filetype=sh :
+
+export EXTLIB="$USERDIR/extlib"
+#export PERL_CPANM_OPT="--local-lib=$USERDIR"
+export PERL_CPANM_OPT="--local-lib=$EXTLIB"
+export PERL5LIB="$EXTLIB/lib/perl5:$EXTLIB/lib/perl5/i386-linux-thread-multi"
+
+export PATH=/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=$USERDIR/bin:$PATH
+export PATH=$USERDIR/script/tool:$PATH
+export PATH=$USERDIR/script/daemon:$PATH
+export PATH=$USERDIR/extlib/bin:$PATH
+#export PATH=.:$PATH
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+source $USERDIR/.aliases
+
+[ -r /etc/bash_completion.d/git ] && source /etc/bash_completion.d/git
+
+# Environmental Variables
+export EDITOR=/usr/bin/vim
+
+# SSH settings
+agent="$USERDIR/tmp/ssh-agent"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+        case $SSH_AUTH_SOCK in
+                /tmp/*/agent.[0-9]*)
+                export _SSH_AUTH_SOCK=$SSH_AUTH_SOCK
+                ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+        esac
+elif [ -S $agent ]; then
+        export SSH_AUTH_SOCK=$agent
+#else
+#        echo "no ssh-agent"
+fi
+
+# aws
+export AWS_REGION=ap-northeast-1
+
+# anyenv
+export PATH=$ANYENV_ROOT/bin:$PATH
+eval "$(anyenv init -)"

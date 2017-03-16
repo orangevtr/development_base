@@ -1,0 +1,77 @@
+# vim: set filetype=sh :
+
+#####################################################################
+# aliases
+#####################################################################
+# colore-ls
+# 個人カラー設定のロード
+if [ -f $USERDIR/.dir_colors ]; then
+   eval `dircolors -b $USERDIR/.dir_colors`
+fi
+# ls
+alias la='ls -avFGl'
+alias ls='ls -vFG'
+alias ll='ls -vFGl'
+# alias l.='ls -d .[a-zA-Z]* --color=always'
+
+# # Perl Tips
+# alias pmver="perl -le '\$m = shift; eval qq(require \$m) or die qq(module \"\$m\" is not installed\\n); print \$m->VERSION'"
+# alias urienc="perl -MURI::Escape -le 'print lc(uri_escape shift)'"
+# alias imap4enc="perl -MUnicode::IMAPUtf7 -le 'print Unicode::IMAPUtf7->new->encode(shift)'"
+# alias imap4dec="perl -MUnicode::IMAPUtf7 -le 'print Unicode::IMAPUtf7->new->decode(shift)'"
+
+# ack
+alias ackp='ack --pager="less -r"'
+
+# ゴミ箱
+#alias rm='trash'
+#alias trash-look='ls -al ~/.trash-dir/ 2> /dev/null'
+#alias trash-clean='\rm -rf ~/.trash-dir/* 2> /dev/null'
+
+# common
+# alias del='rm -rf'
+# alias cp='cp -irf'
+# alias mv='mv -i'
+# alias ..='cd ..'
+# alias pd="pushd"
+# alias po="popd"
+# alias eng='LANG=C LANGUAGE=C LC_ALL=C'
+# alias zcompile='zcompile ~/.zshrc'
+# alias sc='screen'
+
+# よく間違えるもの
+# alias dc='cd'
+# alias bc='cd'
+
+#alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+# alias cl='clear'
+#alias dircl='eval `dircolors ~/.dir_colors -b`'  ## for RedHat (FedoraCore)
+# alias dircl='eval `dircolors -b ~/.dir_colors`'   ## for Debian
+# alias q='exit';
+# alias e='exit';
+# alias quit='exit';
+
+# alias kon='modprobe -q vga16fb; modprobe -q fbcon; jfbterm';
+# alias jfbterm='LANG=ja_JP.eucJP /usr/bin/jfbterm'
+
+# application
+
+# grep 行数, 再帰的, ファイル名表示, 行数表示, バイナリファイルは処理しない
+# alias grep='grep -i -r -H -n -I'
+
+# development
+# alias py='python'
+# alias gdb='gdb -silent'
+# alias gpp='g++'
+
+# 今迄の履歴を簡単に辿る
+alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"' # AUTO_PUSHD が必要
+# dirs -v  --  ディレクトリスタックを表示
+
+alias rmbak='rm -f *~'
+alias rmdotbak='rm -f .*~'
+alias rmrbak='find . -name "*~" | xargs rm -fv'
+
+alias vim="vim -u $USERDIR/.vimrc"
+#alias git="GIT_CONFIG=$USERDIR/.gitconfig git"
+alias screen="screen -c $USERDIR/.screenrc"
