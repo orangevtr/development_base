@@ -3,7 +3,7 @@ services:
   mysql56:
     image: mysql:5.6
     volumes:
-      - ./docker/development/etc/mysql/conf.d:/etc/mysql/conf.d
+      - ./data/mysql:/var/lib/mysql
     ports:
       - "3306:3306"
     environment:
@@ -13,6 +13,13 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - /var/lib/docker/home:/home
+      - ./data/workspace:/home/orangevtr/workspace
     depends_on:
+      - mysql56
+    ports:
+      - "3000:3000"
+      - "5000:5000"
+      - "8080:8080"
+      - "2222:22"
+    links:
       - mysql56
