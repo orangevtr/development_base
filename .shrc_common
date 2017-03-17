@@ -42,5 +42,5 @@ fi
 export AWS_REGION=ap-northeast-1
 
 # anyenv
-export PATH=$ANYENV_ROOT/bin:$PATH
+export PATH=$USERDIR/.anyenv/bin:$PATH
 eval "$(anyenv init -)"
