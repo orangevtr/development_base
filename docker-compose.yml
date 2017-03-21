@@ -12,6 +12,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: orangevtr/development_base
     volumes:
       - ~/.ssh:/home/orangevtr/.ssh
       - ./data/workspace:/home/orangevtr/workspace
