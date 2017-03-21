@@ -24,40 +24,14 @@ USER orangevtr
 ENV HOME /home/orangevtr
 WORKDIR /home/orangevtr
 
-# Add init files
-# [TODO] replace by cloning dotfiles
-ADD .aliases .bashrc .screenrc .vimrc .zshrc .shrc_common ${HOME}/
-
-# vim
-RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# install vimproc before installing modules with neobundle
-# c.f. https://github.com/Shougo/vimproc.vim#manual-install
-RUN git clone https://github.com/Shougo/vimproc.vim ~/.vim/bundle/vimproc.vim
-RUN cd ~/.vim/bundle/vimproc.vim && make
-RUN for d in autoload lib plugin; do mkdir -p ~/.vim/$d; cp -pr ~/.vim/bundle/vimproc.vim/$d/* ~/.vim/$d; done
-
-# install packages with neobundle
-RUN git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-RUN ~/.vim/bundle/neobundle.vim/bin/neoinstall
-
 # volumes
 USER orangevtr
 RUN mkdir ~/workspace
 
-# Add anyenv
-RUN git clone https://github.com/riywo/anyenv ~/.anyenv
-
-# rbenv
-RUN bash -l -c "anyenv install rbenv"
-RUN bash -l -c "rbenv install 2.4.0"
-
-# node.js
-RUN bash -l -c "anyenv install ndenv"
-RUN bash -l -c "ndenv install v6.10.0"
-
-# tmp
-RUN mkdir -p ~/tmp
+# Setup dotfiles and bootstrap
+RUN git clone https://github.com/orangevtr/dotfiles.git ~/.dotfiles
+RUN ~/.dotfiles/bootstrap.sh
+RUN cd ~/.dotfiles && git remote set-url origin github-mine:orangevtr/dotfiles.git
 
 # ssh
 USER root

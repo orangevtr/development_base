@@ -13,6 +13,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
+      - ~/.ssh:/home/orangevtr/.ssh
       - ./data/workspace:/home/orangevtr/workspace
     depends_on:
       - mysql56
