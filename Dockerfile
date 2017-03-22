@@ -1,14 +1,29 @@
-FROM centos:7
+FROM ubuntu:latest
 
 # Install prerequisites
 RUN set -x \
-        && curl -fLo /etc/yum.repos.d/yarn.repo https://dl.yarnpkg.com/rpm/yarn.repo \
-        && curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+        && apt-get update \
+        && apt-get install -y gcc make sudo vim screen tree telnet mysql-client \
+        wget bzip2 openssh-server git \
+        curl apt-transport-https libssl-dev libreadline-dev zlib1g-dev
 
-RUN yum install -y gcc make sudo file git vim screen tree telnet which mariadb yarn wget bzip2 readline-devel openssh-server openssl-devel openssl-libs
+# Install YARN
+RUN set -x \
+        && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+        && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
+        && apt-get update \
+        && apt-get install -y yarn 
 
 # Setup timezone
 RUN ln -f -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+# Setup locale
+RUN set -x \
+        && apt-get install -y language-pack-ja \
+        && update-locale LANG=ja_JP.UTF-8
+
+ENV LANG ja_JP.UTF-8
+ENV LC_ALL ja_JP.UTF-8
 
 # sshd config
 RUN perl -i -ple 's{(session.*)required(.*pam_loginuid.so)}{$1optional$2}' /etc/pam.d/sshd
