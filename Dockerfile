@@ -31,7 +31,7 @@ RUN mkdir /var/run/sshd
 
 # user
 RUN echo 'root:root' | chpasswd
-RUN useradd -m orangevtr \
+RUN useradd -m orangevtr -s /bin/bash \
         && echo "orangevtr ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
         && echo 'orangevtr:orangevtr' | chpasswd
 
